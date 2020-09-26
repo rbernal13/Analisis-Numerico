@@ -7,8 +7,10 @@
 
 
 import pylab as pylab
+
 errorI=[]
 nIteraciones=[]
+
 def horner(a, x):
     tam = len(a)
     original = a[0]
@@ -41,7 +43,8 @@ def NewtonHorner(p, x_0, maxIter = 5000, tol = 10e-16):
     if nIter > maxIter:
         print("El numero maximo de iteraciones se ha excedido")
     return x
-#print("raiz encontrada en el polinomio x⁴−9x²−5x³+155x−250 es: ",NewtonHorner((1,-5,-9,155,-250),5))
+
+#print("raiz encontrada en el polinomio x⁴−9x²−5x³+155x−250 es: ",NewtonHorner((1,-9,-5,155,-250),5))
 print("raiz encontrada en el polinomio 10x⁵+3x²-2 es: ",NewtonHorner((10,0,0,3,0,-2),5))
 #print("raiz encontrada en el polinomio x³−2x²+4x/3−8/27 es: ",NewtonHorner((1,-2,4/3,-(8/27)),5))
 
