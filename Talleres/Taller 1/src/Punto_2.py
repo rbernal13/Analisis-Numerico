@@ -1,7 +1,18 @@
+"""
+Realizado por:
+ - Santiago Romero
+ - Sandra Chavez
+ - Ricardo Bernal
+"""
+
+
 import scipy
 import scipy.optimize as opt
 import numpy
 import pylab as pylab
+
+
+
 #ejercicio 1
 cantidad=[]
 iteraciones=[]

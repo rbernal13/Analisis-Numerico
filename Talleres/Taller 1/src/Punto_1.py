@@ -8,8 +8,6 @@ Realizado por:
 import math
 import numpy as np 
 import pylab as pylab
-
-
 errorI=[]
 nIteraciones=[]
 def horner(a, x):
