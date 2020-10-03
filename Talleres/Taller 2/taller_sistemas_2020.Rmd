@@ -94,16 +94,14 @@ return(M)
 
 
 
-
 7. Dado el siguiente sistema: 
 
-$2x-z=1$   
-$\beta$$x+2y-z=2$     
-
+$2x-z=1$
+$\beta$$x+2y-z=2$
 $-x+y+ \alpha$$z=1$  
 
+a. Encuentre el valor de $\alpha$ y $\beta$ para asegura la convergencia por el método de Jacobi y para Gauss Seidel. Sugerencia: utilice el teorema convergencia
 
-a. Encuentre el valor de $\alpha$ y $\beta$ para asegura la convergencia por el método de Jacobi y para Gauss Seidel. Sugerencia: utilice el teorema convergencia      
 b. Genere una tabla que tenga 10 iteraciones, del método de Jacobi con vector inicial $x_{0}=[1,2,3]^t$      
 
 8. Instalar el paquete Matrix y descomponga la matriz $A$ (del punto dos) de la forma $LU$ y la factorizarla como $A=QR$. Verifique su respuesta.
