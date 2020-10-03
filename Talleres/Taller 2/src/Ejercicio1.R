@@ -34,6 +34,8 @@ print(A)
 b = matrix(c(1.45,3,5.12,-4), nrow=n, byrow=TRUE)
 print(b)
 
+# METODO sOR
+
 diago <- function(M) { # Obtener Diagonal
   
   M[col(M)!=row(M)] <- 0
@@ -56,3 +58,5 @@ T = (sol1)%*%(L+U)
 
 print(T)
 #print(round(norm(T,"F"),4))
+
+# METODO JACOBI
