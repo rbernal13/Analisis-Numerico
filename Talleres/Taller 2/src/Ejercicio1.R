@@ -58,3 +58,5 @@ print(T)
 
 # METODO JACOBI
 
+solJacobi=itersolve(A, b, 1:4,nmax = 1000, tol, method = c("Jacobi"))
+print(solJacobi) # 56 Iteraciones
