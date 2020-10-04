@@ -53,19 +53,20 @@ A = matrix(c(-8.1, -7/4, 6.1, -2, -1, 4,
 A
 ```
   
-  b. Utilice la función itersolve(A, b, tol , method = "Gauss-Seidel") y solucionar el sistema asociado a la matriz $A$ con:   $b=[1.45,3,5.12,-4]^{t}$ con una tolerancia de error de $1e^-8$    
+	b. Utilice la función itersolve(A, b, tol , method = "Gauss-Seidel") y solucionar el sistema asociado a la matriz $A$ con:   $b=[1.45,3,5.12,-4]^{t}$ con una tolerancia de error de $1e^-8$    
 
-c. Genere las iteraciones del método de Jacobi, calcular error relativo para cada iteracion y comparar la solución con el método de Gauss-Seidel  
-d. Encuentre la matriz de transición y el radio espectral     
+	c. Genere las iteraciones del método de Jacobi, calcular error relativo para cada iteracion y comparar la solución con el método de Gauss-Seidel  
+	d. Encuentre la matriz de transición y el radio espectral     
 
 3. Sea el sistema $AX=b$ dados en ejercicio,y  con tol= e^-8        
  a. Implemente una función en R para que evalue las raíces del polinomio característico asociado a la matriz $A$    
  b. Use el teorema de convergencia para determinar cuál método iterativo es más favorable.  
- c. Evalue la matriz de transición para cada caso (método) y en el caso del método de relajación determine el valor óptimo de $\omega$      
+ c. Evalue la matriz de transición para cada caso (método) y en el caso del método de relajación determine el valor óptimo de $\omega$
+ 
  d. Teniendo en cuenta lo anterior resolver el sistema   
  e Comparar con la solución por defecto       
 f. Evaluar el número de condición de la matriz A    
-g. Evaluar el efecto en la solución si la entradad $a_{11}=4.01$ aplicar cambio y solucionar. Después, debe comparar con el valor condicón   
+g. Evaluar el efecto en la solución si la entradad $a_{11}=4.01$ aplicar cambio y solucionar. Después, debe comparar con el valor condicón.   
 
 ```{r, echo=T}
 A = matrix(c(4, -1, -1, -1, -1, 4,

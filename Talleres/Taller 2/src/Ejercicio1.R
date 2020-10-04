@@ -36,16 +36,13 @@ print(b)
 
 # METODO sOR
 
-diago <- function(M) { # Obtener Diagonal
-  
-  M[col(M)!=row(M)] <- 0
-  
-  return(M)
-}
+# diago <- function(M) { # Obtener Diagonal
+#   M[col(M)!=row(M)] <- 0
+#   return(M)
+# }
 
-
-D = diago(A) #Diagonal D para matriz A
-#D = diag(diag(A^-1))
+# D = diago(A) #Diagonal D para matriz A
+D = diag(diag(A))
 L = tril(A,k=-1,diag = FALSE) # Triangular inferior de la matriz A
 U = triu(A,k=1,diag = FALSE) # Triangular superior de la matriz A
 
@@ -54,9 +51,10 @@ sol1 = (-solve(D))
 print(sol1)
 
 T = (sol1)%*%(L+U)
-#T = round((sol)%*%(sum),4)
+# T = round((sol)%*%(sum),4)
 
 print(T)
-#print(round(norm(T,"F"),4))
+# print(round(norm(T,"F"),4))
 
 # METODO JACOBI
+
