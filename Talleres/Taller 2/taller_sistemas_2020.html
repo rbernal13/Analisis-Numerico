@@ -1767,7 +1767,7 @@ print(solJacobi) # 56 Iteraciones</code></pre>
 c. Genere las iteraciones del método de Jacobi, calcular error relativo para cada iteracion y comparar la solución con el método de Gauss-Seidel  
 d. Encuentre la matriz de transición y el radio espectral</code></pre>
 <p>-&gt; Hecho - Revisar Ejercicio2.R</p>
-<pre class="r"><code>#Ejercicio 1
+<pre class="r"><code>#Ejercicio 2
 
 #Punto A
 require(Matrix)
@@ -2089,9 +2089,103 @@ M[col(M) &gt;= row(M) + k + 1] &lt;- 0
 }
 return(M)
 }</code></pre>
+<p>-&gt;Hecho. Revisar Ejericio4.R</p>
+<pre class="r"><code>#Ejercicio 4
+
+#4. Pruebe el siguiente algoritmo con una matriz $A_{3}$, modifiquelo para quue $a_{ii}=0$ para todo $i$
+
+tril1 &lt;- function(M, k)
+{
+  if (k != 0) {
+    M[!lower.tri(M, diag = TRUE)] &lt;- 0
+    M[!upper.tri(M, diag = TRUE)] &lt;- 0
+  } 
+  else {
+    M[col(M) == row(M) + k ] &lt;- 0
+  }
+  return(M)
+}
+M = matrix(c(9,7,4,
+             10,9,5,
+             6,8,7,
+             2,1,4), nrow = 4, byrow = TRUE)
+r&lt;- tril1(M, 0)
+print(&quot;Resultado de la funcion:&quot;)</code></pre>
+<pre><code>## [1] &quot;Resultado de la funcion:&quot;</code></pre>
+<pre class="r"><code>print(r)</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    0    7    4
+## [2,]   10    0    5
+## [3,]    6    8    0
+## [4,]    2    1    4</code></pre>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Cree una función que cuente el número de multiplicaciones en el método directo de Gauss-Jordan, para resolver un sistema de <span class="math inline">\(n\)</span> ecuaciones y pruebelo para <span class="math inline">\(n=5\)</span></p></li>
-<li><p>Dado el siguiente sistema:</p></li>
+<li>Cree una función que cuente el número de multiplicaciones en el método directo de Gauss-Jordan, para resolver un sistema de <span class="math inline">\(n\)</span> ecuaciones y pruebelo para <span class="math inline">\(n=5\)</span></li>
+</ol>
+<p>-&gt; Hecho. Revisar Ejercicio5.R</p>
+<pre class="r"><code># Ejercicio 5
+
+#5. Cree una función que cuente el número de multiplicaciones
+#en el método directo de Gauss-Jordan, para resolver 
+#un sistema de $n$ ecuaciones y pruebelo para $n=5$
+
+
+GaussJordanM = function(A, B){ # Se supone det(A) != 0
+  numMult = 0
+  n = nrow(A) # = ncol(A) para que sea cuadrada
+  
+  # matriz ampliada
+  Ab = cbind(A,B)
+  print(Ab)
+  # Eliminación
+  for (k in 1:(n-1)){ # desde columna k=1 hasta k=n-1
+    if(Ab[k,k]==0){ # intercambio de fila
+      fila = which(Ab[k, ]!=0)[1]
+      Ab[c(k, fila), ] = Ab[c(fila, k), ]
+    }
+    
+    # Eliminación columna k
+    for (i in (k+1):n){# debajo de la diagonal
+      # Fi = Fi - a_ik/a_kk * Fk, i=k+1,...,n
+      Ab[i, ] = Ab[i, ] - Ab[i, k]/Ab[k,k]*Ab[k, ]
+      numMult = numMult + 2*(ncol(Ab))
+    }
+  }
+  
+  # Sustitución hacia atrás-------------------------
+  x = rep(NA, times=n)
+  x[n] = Ab[n, n+1]/Ab[n,n]
+  numMult = numMult + n+1
+  
+  for(i in (n-1):1 )
+    {
+    x[i]= (Ab[i, n+1] - sum(Ab[i, (i+1):n]*x[(i+1):n]) ) /Ab[i,i]
+    numMult = numMult + 2*(n-2)
+    }
+
+  cat(&quot;Numero de Multiplicaciones del ejercicio:&quot;, numMult, &quot;\n&quot;)
+  return(x)
+}
+
+A = matrix(c( 0, 1,1,1,1,
+              -5, -4, 3, 4, 8,
+              0, 7, -2, 3, 7,
+              -1, -7, -8, 3,7,
+              3, 7, 5, 5, 9), nrow=5, byrow=TRUE)
+B = matrix(c(1,0,0,0,1), nrow=5, byrow=TRUE)
+
+cat(&quot;Solucion ejercicio Punto  5: &quot;,&quot;\n&quot;)</code></pre>
+<pre><code>## Solucion ejercicio Punto  5:</code></pre>
+<pre class="r"><code>GaussJordanM(A,B)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    0    1    1    1    1    1
+## [2,]   -5   -4    3    4    8    0
+## [3,]    0    7   -2    3    7    0
+## [4,]   -1   -7   -8    3    7    0
+## [5,]    3    7    5    5    9    1
+## Numero de Multiplicaciones del ejercicio: 150</code></pre>
+<pre><code>## [1] -0.06199461  0.06334232 -0.13746631  2.05929919 -0.98517520</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Dado el siguiente sistema:</li>
 </ol>
 <p><span class="math inline">\(2x-z=1\)</span> <span class="math inline">\(\beta\)</span><span class="math inline">\(x+2y-z=2\)</span> <span class="math inline">\(-x+y+ \alpha\)</span><span class="math inline">\(z=1\)</span></p>
 <ol style="list-style-type: lower-alpha">
@@ -2251,6 +2345,26 @@ print(A2)</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Realice varias pruebas que la matriz de transición por el método de Gauss-Seidel esta dada por <span class="math inline">\(T=(-D^{-1}U)(I+LD^{-1})^{-1}\)</span></li>
 </ol>
+<p>-&gt; Hecho. Revisar Ejericio9.R y su demostracion en .pdf</p>
+<pre class="r"><code># Ejercicio 9
+
+#9. Realice varias pruebas que la matriz de transición por 
+#el método de Gauss-Seidel esta dada por $T=(-D^{-1}U)(I+LD^{-1})^{-1}$    
+
+N &lt;- 3
+A &lt;- Diag(rep(3,N)) + Diag(rep(-2, N-1), k=-1) + Diag(rep(-1, N-1), k=1)
+x0 &lt;- rep(0, N)
+B = c(4,5,9)
+
+itersolve(A, B, tol=1e-7 , method = &quot;Gauss-Seidel&quot;)</code></pre>
+<pre><code>## $x
+## [1] 3.466666 6.400000 7.266666
+## 
+## $iter
+## [1] 21
+## 
+## $method
+## [1] &quot;Gauss-Seidel&quot;</code></pre>
 <div id="sistemas-no-lineales" class="section level3">
 <h3>Sistemas No lineales</h3>
 <ol start="10" style="list-style-type: decimal">
@@ -3755,7 +3869,7 @@ sol = BBsolve(par=p0, fn=trigexp)</code></pre>
 ##  [9976] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
 ##  [9983] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
 ##  [9990] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
-##  [9997] 1.0000000 1.0000000 1.0000002 0.9999984</code></pre>
+##  [9997] 1.0000000 1.0000000 1.0000001 0.9999991</code></pre>
 <p>-&gt; Hecho - Revisar Ejercicio10B.R</p>
 <pre class="r"><code>#Ejercicio 10 - Parte B
 
@@ -5221,7 +5335,7 @@ sol = BBsolve(par=p0, fn=trigexp)</code></pre>
 ##  [9976] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
 ##  [9983] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
 ##  [9990] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
-##  [9997] 1.0000000 1.0000000 1.0000001 0.9999988</code></pre>
+##  [9997] 1.0000000 1.0000000 1.0000001 0.9999992</code></pre>
 <pre class="r"><code># [1] 1 1 1 1 1 .......</code></pre>
 </div>
 
