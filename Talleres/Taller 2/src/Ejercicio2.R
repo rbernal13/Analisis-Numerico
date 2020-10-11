@@ -1,50 +1,28 @@
 #Ejercicio 1
-"""
-2. Dada la siguiente matriz, utilice las funciones anteriores para descomponer la matriz $A=L+D+U$, recuerde que esta descomposición es la del metodo de (Jacobi). Verifique su respuesta   
-    
-Adicionalmente, verifique si A es simétrica, si A es diagonalmente dominante, justifique su respuesta   
 
-```{r, echo=T}
-A = matrix(c(-8.1, -7/4, 6.1, -2, -1, 4,
--3, -1, 0, -1, -5, 0.6,
--1, 1/3, 6, 1/2), nrow=4, byrow=TRUE)
-A
-```
-  
-  b. Utilice la función itersolve(A, b, tol , method = Gauss-Seidel) y solucionar el sistema asociado a la matriz $A$ con:   $b=[1.45,3,5.12,-4]^{t}$ con una tolerancia de error de $1e^-8$    
-
-c. Genere las iteraciones del método de Jacobi, calcular error relativo para cada iteracion y comparar la solución con el método de Gauss-Seidel  
-  
-
-"""
 #Punto A
 require(Matrix)
 require(pracma)
 A <- matrix(c(-8.1, -7, 6.123, -2, -1, 4,
-             -3, -1, 0, -1, -5, 0.6,
-             -1, 0.33, 6, 1/2), nrow=4, byrow=TRUE)
+              -3, -1, 0, -1, -5, 0.6,
+              -1, 0.33, 6, 1/2), nrow=4, byrow=TRUE)
 
 ludec <- lu(A)
 L <- ludec$L
-L
+print(L)
 
 U <-ludec$U
-U
+print(U)
 
 D <- diag(diag(A))
-D
+print(D)
 
 A <- L %*% U
-A
+print(A)
 
 
 
 #punto b
-A <- matrix(c(-8.1, -7, 6.123, -2, -1, 4,
-              -3, -1, 0, -1, -5, 0.6,
-              -1, 0.33, 6, 1/2), nrow=4, byrow=TRUE)
-
-
 b <- matrix(c(1.45,3,5.12,-4.0), nrow = 4, ncol = 1, byrow = TRUE)
 
 cat("Mediante m?todo de Gauss-Seidel\n")
@@ -54,7 +32,7 @@ itersolve(A, b, tol = 1e-9, method = "Gauss-Seidel")
 #Punto c
 
 itersolve <- function(A, b, x0 = NULL, 
-                      nmax = 1000, tol = .Machine$double.eps^(0.5),
+                      nmax = 100, tol = .Machine$double.eps^(0.5),
                       method = c("Gauss-Seidel", "Jacobi", "Richardson")) {
   stopifnot(is.numeric(A), is.numeric(b))
   
@@ -120,5 +98,6 @@ cat("Mediante m?todo de Jacobi\n")
 itersolve(A, b, nmax = 5, tol = 1e-9, method = "Jacobi")
 
 
-#referencias
+
+#Referencias
 #rstudio-pubs-static.s3.amazonaws.com

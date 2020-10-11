@@ -1,4 +1,4 @@
-# Ejercicio 9
+# Ejercicio 7
 # Parte A - Encuentre los valores de Alpha y Beta de la matriz A para asegurar la convergencia de Jacobi
 # Convergencia de Jacobi -> A debe ser 'estrictamente diagonal dominante'
 

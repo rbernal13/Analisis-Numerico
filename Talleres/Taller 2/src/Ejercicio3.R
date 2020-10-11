@@ -104,8 +104,8 @@ jacobi<-function(a,n){
   AA=D+L+U
   print(AA)
 }
-jacobi(A,4)
+jacobi(A,4) # Punto D
 
-#Punto d
+#Punto E
 solucion<- solve(A,b)
 print(solucion)
