@@ -84,7 +84,7 @@ def esfera_bezier(hacer=False):
 cilindro(True)
 esfera(True)
 #esfera_bezier(True)
-#paraboloide(True)
+paraboloide(True)
 area=areaCilindro()+areaEsfera()+areaParaboloide()-(abs(areaCilindro()-areaEsfera()))-(abs(areaParaboloide()-areaEsfera()))
 volumen= volumenCilindro()+volumenEsfera()+volumenParaboloide()-(abs(volumenCilindro()-volumenEsfera()))-(abs(volumenParaboloide()-volumenEsfera()))
 print("el área de la jarra es: ",area)

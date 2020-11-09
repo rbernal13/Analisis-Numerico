@@ -1,0 +1,29 @@
+#for i in range(0,10):
+
+#A-B-C (x+,y+,z+)
+points_set_1 = a([[0, 1, 1], [0.65, 0.75, 1],[1, 0, 1]])
+t_points = np.arange(0, 1, 0.01)
+curve_set_1 = Bezier.Curve(t_points, points_set_1)
+ax.plot(curve_set_1[:, 0], curve_set_1[:, 1], curve_set_1[:, 2])
+ax.plot(points_set_1[:, 0], points_set_1[:, 1], points_set_1[:, 2], 'o:')
+
+#C-D-E (x+,y-,z+)
+points_set_2 = a([[1, 0, 1], [0.75, -0.65, 1],[0, -1, 1]])
+t_points = np.arange(0, 1, 0.01)
+curve_set_2 = Bezier.Curve(t_points, points_set_2)
+ax.plot(curve_set_2[:, 0], curve_set_2[:, 1], curve_set_2[:, 2])
+ax.plot(points_set_2[:, 0], points_set_2[:, 2], points_set_2[:, 2], 'o:')
+
+#E-F-G (x-,y-,z+) --- +B = -F
+points_set_3 = a([[0, -1, 1], [-0.65, -0.75, 1],[-1, 0, 1]])
+t_points = np.arange(0, 1, 0.01)
+curve_set_3 = Bezier.Curve(t_points, points_set_3)
+ax.plot(curve_set_3[:, 0], curve_set_3[:, 1], curve_set_3[:, 2])
+ax.plot(points_set_3[:, 0], points_set_3[:, 2], points_set_3[:, 2], 'o:')
+
+#G-H-A (x-,y+,z+)
+points_set_4 = a([[-1, 0, 1], [-0.65, 0.75, 1],[0, 1, 1]])
+t_points = np.arange(0, 1, 0.01)
+curve_set_4 = Bezier.Curve(t_points, points_set_4)
+ax.plot(curve_set_4[:, 0], curve_set_4[:, 1], curve_set_4[:, 2])
+ax.plot(points_set_4[:, 0], points_set_4[:, 2], points_set_4[:, 2], 'o:')
