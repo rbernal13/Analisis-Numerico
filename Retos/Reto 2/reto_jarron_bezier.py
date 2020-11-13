@@ -77,7 +77,6 @@ for i in np.arange(0,1,0.3):
 
 print("b: ",b1, "r: ",r1, "h: ", h)
 
-
 #Inicio Esfera Inferior
 for i in np.arange(0,1,0.1):
     
@@ -201,6 +200,8 @@ print("b: ",b2, "r: ",r2, "h: ", h)
 b1 = b2
 r1 = r2
 
+
+
 #Inicio "Paraboloide"
 k = 0.01
 
@@ -276,10 +277,6 @@ for i in np.arange(0,1,0.1):
     h=h+0.05
 
 print("b: ",b2, "r: ",r2, "h: ", h)
-
-
-
-
 
 ax.set_xlim(-5, 5)
 ax.set_ylim(-5, 5)
