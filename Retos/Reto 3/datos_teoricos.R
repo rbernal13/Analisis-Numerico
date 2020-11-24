@@ -46,7 +46,7 @@ out1 <- as.data.frame(out1*N) #aqui puede multiplicar 'out' por N
 #eliminar la variable 'time' en out
 out1$time <- NULL
 # #mostrar 10 primeros datos
-head(out1, 1000)
+#head(out1, 100)
 
 out1 <- ode(y = init, times = times, func = sir, parms = param, method="adams")
 #cambiar out a un data.frame
@@ -54,7 +54,7 @@ out1 <- as.data.frame(out1*N) #aqui puede multiplicar 'out' por N
 #eliminar la variable 'time' en out
 out1$time <- NULL
 #mostrar 10 primeros datos
-head(out1, 1000)
+head(out1, 100)
 
 summary(out1)
 
@@ -112,7 +112,7 @@ sol2 <- as.data.frame(sol2*N)
 sol2$time <- NULL
 
 # Mostrar primeros datos
-head(sol2, 1000)
+head(sol2, 100)
 
 # CALCULO DE ERROR
 
