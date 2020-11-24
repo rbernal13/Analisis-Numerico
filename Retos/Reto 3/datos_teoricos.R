@@ -114,20 +114,6 @@ sol2$time <- NULL
 # Mostrar primeros datos
 head(sol2, 100)
 
-# CALCULO DE ERROR
-
-errores = c()
-i = 1
-max = length(100)
-while(i <= max){
-  errorActual =((abs(out1[i] - sol2[i] )/sol2[i]))*100
-  errores[i] = errorActual
-  i = i + 1
-}
-
-head(errores,100)
-
-
 
 
 
