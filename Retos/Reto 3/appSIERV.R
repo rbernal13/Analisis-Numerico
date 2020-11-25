@@ -154,10 +154,10 @@ server <- function(input, output) {
     
     r0r <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(sum(v_iniciales))*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
     
-    #p0 <- (sum(v_iniciales)/((input$L)*(input$L)))
-    p0 <- 0
-    #r0p <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(p)*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
-    r0p <- 0
+    p0 <- (sum(v_iniciales)/((input$L)*(input$L)))
+    #p0 <- 0
+    r0p <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(p0)*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
+    
     
     output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)"),
                                             "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L)  )
