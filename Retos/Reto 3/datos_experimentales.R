@@ -39,27 +39,19 @@
   #intervalo de tiempo y resolución
   times2 <- seq(0, 1000, by = 1)
   #resolver el sistema de ecuaciones con función 'ode'
-  sol2 <- ode(y = init2, times = times2, func = sir2, parms = param2, method="euler")
+  sol2 <- ode(y = init2, times = times2, func = sir2, parms = param2, method="adams")
   #cambiar out a un data.frame
   sol2 <- as.data.frame(out2*N) #aqui puede multiplicar 'out' por N
   #eliminar la variable 'time' en out
   sol2$time <- NULL
   #mostrar 10 primeros datos
-  head(out2, 1000)
+  head(out2, 100)
   
-  # 
+  summary(out2)
+   
   # # ggplot(iris,aes(x = times, y = out2))+ geom_point() + geom_smooth()
   # matplot(x = times, y = out1, type = "l",
   #         xlab = "Tiempo", ylab = "Poblacion (S, E, I, R, V)", main = "Datos Exp",
   #         lwd = 1, lty = 1, bty = "l", col = 2:4)
   # añadir leyenda de líneas
   #legend(100, 0.1, c("Susceptibles", "razon de cambio nodos expuestos", "Infectados","Recuperados Sin vacuna","recuperados vacunados"),pch = 1, col = 2:4, bty = "n", cex = 1)
-  # 
-  # plot(times, S, type="l", col="blue", ylim=c(0,N), xlab="Tiempo (en horas)", ylab="Numero de Personas",main = "Metodo 1: Runge Kutta 4")
-  # lines(times, I, type="l", col="red")
-  # lines(times, R, type="l", col="green")
-  
-  
-  #out1%>%gather(variable,value,-time)%>%ggplot(aes(x=time,y=value,color=variable))+geom_line(size=2)+theme_classic()+labs(x='time (yr)',y='number of individuals')
-  
-  
