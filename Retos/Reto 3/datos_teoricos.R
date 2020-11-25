@@ -14,10 +14,10 @@ param <- c(
   beta = 0.0003,
   alpha =  0.1,
   gammaa=0.0025,
-  epsilon=0.0010,
+  epsilon=0.001,
   siggma = 0.0014,
   delta= 0.001,
-  phi=0.00003) # Con r = 2, L = 10
+  phi=0.000037) # Con r = 2, L = 10
 #crear la función con las ODE
 
 N <- sum(init)
@@ -26,27 +26,27 @@ sir <- function(times, init, param) {
   with(as.list(c(init, param)), {
     #ecuaciones diferenciales   
     dS <- (miu*N) - (phi*S*I) - (miu*S) -(siggma*S) + (epsilon*V) + (delta*R)
-    dE <- (phi*S*I) - ((miu+alpha)*E)
-    dI <- (alpha*E) - ((miu+gammaa)*I)
-    dR <- (gammaa*I) - ((miu+delta)*R)
-    dV <- (siggma*S) - ((miu+epsilon)*V)
+    dE <- (phi*S*I) - (miu+alpha)*E
+    dI <- (alpha*E) - (miu+gammaa)*I
+    dR <- (gammaa*I) - (miu+delta)*R
+    dV <- (siggma*S) - (miu+epsilon)*V
            
     #resultados de las tasas de cambio    
     return(list(c(dS, dE, dI, dR, dV)))
   })
 }
 #intervalo de tiempo y resolución
-times <- seq(0, 100, by = 10)
+times <- seq(1, 1000, by = 1)
 #resolver el sistema de ecuaciones con función 'ode'
 
-
-out1 <- ode(y = init, times = times, func = sir, parms = param, method="rk4")
-#cambiar out a un data.frame
-out1 <- as.data.frame(out1*N) #aqui puede multiplicar 'out' por N
-#eliminar la variable 'time' en out
-out1$time <- NULL
-# #mostrar 10 primeros datos
-#head(out1, 100)
+# 
+# out1 <- ode(y = init, times = times, func = sir, parms = param, method="rk4")
+# #cambiar out a un data.frame
+# out1 <- as.data.frame(out1*N) #aqui puede multiplicar 'out' por N
+# #eliminar la variable 'time' en out
+# out1$time <- NULL
+# # #mostrar 10 primeros datos
+# #head(out1, 100)
 
 out1 <- ode(y = init, times = times, func = sir, parms = param, method="adams")
 #cambiar out a un data.frame
@@ -54,10 +54,9 @@ out1 <- as.data.frame(out1*N) #aqui puede multiplicar 'out' por N
 #eliminar la variable 'time' en out
 out1$time <- NULL
 #mostrar 10 primeros datos
-head(out1, 100)
+head(out1,50)
 
 summary(out1)
-
 
 matplot(x = times, y = out1, type = "l",
         xlab = "Tiempo", ylab = "Poblacion (S, E, I, R, V)", main = "Datos Exp",

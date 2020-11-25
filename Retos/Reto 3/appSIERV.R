@@ -12,7 +12,7 @@ library(shiny)
 ui <- fluidPage(
   
   # Application title
-  titlePanel("Prueba modelo SIER-V en redes WSN"),
+  titlePanel("Prueba modelo SEIR-V en redes WSN"),
   
   sidebarLayout(
     sidebarPanel(
@@ -44,9 +44,9 @@ ui <- fluidPage(
                   value = 0.0025),
       sliderInput("alpha",
                   "Valor alpha (tasa de nodos a suceptible):",
-                  min = 0.041,
-                  max = 0.500,
-                  value = 0.100),
+                  min = 0.1,
+                  max = 0.9,
+                  value = 0.1),
       sliderInput("sigma",
                   "Valor sigma (tasa de vacunación):",
                   min =  0.001,
@@ -81,13 +81,14 @@ ui <- fluidPage(
                   "Dias",
                   min = 100,
                   max = 2000,
-                  value = 500)
+                  value = 1000)
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
       plotOutput("distPlot"),
-      tableOutput("table1")
+      tableOutput("table1"),
+      tableOutput("table2")
     )
   )
 )
@@ -117,22 +118,20 @@ server <- function(input, output) {
     }
     
     parametros <- c(
-      miu = 0.001,
+      miu = 0.003,
       beta = input$beta,
       alpha =  input$alpha,
       gammaa = input$gamma,
       epsilon = 0.001,
       siggma = input$sigma,
       delta = 0.001,
-      phi = (input$beta*input$r*input$r*3.14)/(input$L*input$L))
+      phi = (input$beta*input$r*input$r*3.1416)/(input$L*input$L))
     
     v_iniciales <- c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)
     
-    dt <- seq(100, input$Tiempo, 10)
+    dt <- seq(1, input$Tiempo, 1)
     
     sol = ode(y=v_iniciales, times=dt, func=SIR,parms=parametros, method = input$tipoModelo)
-    
-    # result = EpiDynamics::SIR(pars = parametros, init = v_iniciales, time = dt)
     
     simulacion.si <- as.data.frame(sol)
     attach(simulacion.si)
@@ -143,7 +142,7 @@ server <- function(input, output) {
     lines(dt, R, type="l", col="green")
     lines(dt, V, type = "l", col = "brown")
     lines(dt, E, type = "l", col = "orange")
-    title("Modelo SIR")
+    title("Modelo SEIR-V")
     legend((input$Tiempo)/2, N + 0.25,
            legend=c("Suceptibles", "Infectados", "Recuperados", "Vacunados","Expuestos"),
            col=c("blue", "red", "green","brown", "orange"), lty=rep(1, 2))
@@ -155,9 +154,10 @@ server <- function(input, output) {
     #p0 <- 0
     r0p <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(p0)*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
     
-    output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)","Valor phi"),
-                                            "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L), ((input$beta*input$r*input$r*3.1416)/(input$L*input$L)) )
-    ))
+    # output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)","Valor phi"),
+    #                                         "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L), ((input$beta*input$r*input$r*3.1416)/(input$L*input$L)) )
+    # ))
+    output$table2 <- renderTable(data.frame(sol))
   })
 }
 

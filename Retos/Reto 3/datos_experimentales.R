@@ -11,12 +11,12 @@
   #parámetros del modelo (coeficientes de las variables)
   param2 <- c(
     L = 10,
-    miu = 0.001,
+    miu = 0.003,
     beta = 0.0005,
     alpha =  0.1,
     gammaa=0.0010,
     epsilon=0.0010,
-    siggma = 0.0014,
+    siggma = 0.0020,
     delta= 0.001,
     rho=0.00003)
   #crear la función con las ODE
@@ -37,7 +37,7 @@
     })
   }
   #intervalo de tiempo y resolución
-  times2 <- seq(0, 1000, by = 1)
+  times2 <- seq(0, 100, by = 10)
   #resolver el sistema de ecuaciones con función 'ode'
   sol2 <- ode(y = init2, times = times2, func = sir2, parms = param2, method="adams")
   #cambiar out a un data.frame
@@ -45,13 +45,13 @@
   #eliminar la variable 'time' en out
   sol2$time <- NULL
   #mostrar 10 primeros datos
-  head(out2, 100)
+  head(sol2, 100)
   
-  summary(out2)
+  summary(sol2)
    
   # # ggplot(iris,aes(x = times, y = out2))+ geom_point() + geom_smooth()
-  # matplot(x = times, y = out1, type = "l",
-  #         xlab = "Tiempo", ylab = "Poblacion (S, E, I, R, V)", main = "Datos Exp",
-  #         lwd = 1, lty = 1, bty = "l", col = 2:4)
+  matplot(x = times, y = sol2, type = "l",
+           xlab = "Tiempo", ylab = "Poblacion (S, E, I, R, V)", main = "Datos Exp",
+           lwd = 1, lty = 1, bty = "l", col = 2:4)
   # añadir leyenda de líneas
   #legend(100, 0.1, c("Susceptibles", "razon de cambio nodos expuestos", "Infectados","Recuperados Sin vacuna","recuperados vacunados"),pch = 1, col = 2:4, bty = "n", cex = 1)
