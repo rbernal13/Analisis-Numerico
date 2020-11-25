@@ -36,7 +36,7 @@ sir <- function(times, init, param) {
   })
 }
 #intervalo de tiempo y resolución
-times <- seq(0, 1000, by = 1)
+times <- seq(0, 100, by = 10)
 #resolver el sistema de ecuaciones con función 'ode'
 
 

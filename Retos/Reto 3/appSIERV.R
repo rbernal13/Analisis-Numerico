@@ -24,33 +24,33 @@ ui <- fluidPage(
                   selected = "adams"),
       sliderInput("L",
                   "Valor del area:",
-                  min = 6,
-                  max = 20,
+                  min = 5,
+                  max = 50,
                   value = 10),
       sliderInput("r",
                   "Valor del radio:",
                   min = 0.1,
-                  max = 2,
-                  value = 0.5),
+                  max = 4,
+                  value = 2),
       sliderInput("beta",
                   "Valor beta (tasa de infeccion):",
                   min = 0.0001,
-                  max = 0.0006,
+                  max = 0.0009,
                   value = 0.0003),
       sliderInput("gamma",
                   "Valor gamma (tasa recuperacion de nodos infectados):",
                   min = 0.001,
-                  max = 0.005,
+                  max = 0.009,
                   value = 0.0025),
       sliderInput("alpha",
                   "Valor alpha (tasa de nodos a suceptible):",
                   min = 0.041,
-                  max = 0.300,
+                  max = 0.500,
                   value = 0.100),
       sliderInput("sigma",
                   "Valor sigma (tasa de vacunación):",
                   min =  0.001,
-                  max =  0.003,
+                  max =  0.009,
                   value =  0.0014),
       sliderInput("S",
                   "Valor de total de suceptibles: ",
@@ -80,7 +80,7 @@ ui <- fluidPage(
       sliderInput("Tiempo",
                   "Dias",
                   min = 100,
-                  max = 1000,
+                  max = 2000,
                   value = 500)
     ),
     
@@ -120,11 +120,11 @@ server <- function(input, output) {
       miu = 0.001,
       beta = input$beta,
       alpha =  input$alpha,
-      gammaa=input$gamma,
-      epsilon=0.001,
+      gammaa = input$gamma,
+      epsilon = 0.001,
       siggma = input$sigma,
-      delta= 0.001,
-      phi=(input$beta*input$r*input$r*3.14)/(input$L*input$L))
+      delta = 0.001,
+      phi = (input$beta*input$r*input$r*3.14)/(input$L*input$L))
     
     v_iniciales <- c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)
     
@@ -155,9 +155,8 @@ server <- function(input, output) {
     #p0 <- 0
     r0p <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(p0)*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
     
-    
-    output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)"),
-                                            "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L)  )
+    output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)","Valor phi"),
+                                            "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L), ((input$beta*input$r*input$r*3.1416)/(input$L*input$L)) )
     ))
   })
 }
