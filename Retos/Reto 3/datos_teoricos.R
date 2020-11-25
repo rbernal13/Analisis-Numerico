@@ -74,7 +74,7 @@ param2 <- c(
   L = 10,
   miu = 0.001,
   beta = 0.0005,
-  alpha =  0.0002,
+  alpha =  0.4,
   gammaa=0.0010,
   epsilon=0.0010,
   siggma = 0.0014,
