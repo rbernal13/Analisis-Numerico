@@ -32,8 +32,8 @@ ui <- fluidPage(
       sliderInput("r",
                   "Valor del radio:",
                   min = 0.5,
-                  max = 2,
-                  value = 2),
+                  max = 4,
+                  value = 1),
       sliderInput("beta",
                   "Valor beta (tasa de infeccion):",
                   min = 0.0001,
@@ -41,14 +41,14 @@ ui <- fluidPage(
                   value = 0.0003),
       sliderInput("gamma",
                   "Valor gamma (tasa recuperacion de nodos infectados):",
-                  min = 0.001,
-                  max = 0.005,
+                  min = 0.0010,
+                  max = 0.0050,
                   value = 0.0025),
       sliderInput("alpha",
                   "Valor alpha (tasa de nodos a suceptible):",
-                  min = 0.0003, 
-                  max = 0.0007,
-                  value = 0.0004),
+                  min = 0.1, 
+                  max = 0.7,
+                  value = 0.4),
       sliderInput("sigma",
                   "Valor sigma (tasa de vacunación):",
                   min =  0.001,
@@ -83,12 +83,13 @@ ui <- fluidPage(
                   "Dias",
                   min = 100,
                   max = 1000,
-                  value = 500)
+                  value = 800)
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
       plotOutput("distPlot"),
+      #fluidRow(column(2,tableOutput("table1")))
       tableOutput("table1")
     )
   )
@@ -103,16 +104,16 @@ server <- function(input, output) {
     #Se limpia la consola para una mejor visualizacion
     library(deSolve)
     
-    #Modelo basado en el escrito "An Epidemic model of Malware"
+    #Modelo basado en "Modeling and Analysis of Worm Propagation in Wireless Sensor Networks"
     
     SIR <- function(t, x, parametros){
       with(as.list(c(parametros, x)),{
         N <- sum(v_iniciales)
         dS <- (miu*N) - (phi*S*I) - (miu*S) -(siggma*S) + (epsilon*V) + (delta*R)
-        dE <- (phi*S*I) - (miu+alpha)*E
-        dI <- (alpha*E) - (miu+gammaa)*I
-        dR <- (gammaa*I) - (miu+delta)*R
-        dV <- (siggma*S) - (miu+epsilon)*V
+        dE <- (phi*S*I) - ((miu+alpha)*E)
+        dI <- (alpha*E) - ((miu+gammaa)*I)
+        dR <- (gammaa*I) - ((miu+delta)*R)
+        dV <- (siggma*S) - ((miu+epsilon)*V)
         
         return(list(c(dS, dI, dR, dV, dE)))
       })
@@ -126,15 +127,13 @@ server <- function(input, output) {
       epsilon=0.001,
       siggma = input$sigma,
       delta= 0.001,
-      phi=(input$beta*input$r*input$r*3.14)/(input$L*input$L))
+      phi=(input$beta*(input$r*input$r)*3.1416)/(input$L*input$L))
     
     v_iniciales <- c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)
     
     dt <- seq(100, input$Tiempo, 10)
     
     sol = ode(y=v_iniciales, times=dt, func=SIR,parms=parametros, method = input$tipoModelo)
-    
-    # result = EpiDynamics::SIR(pars = parametros, init = v_iniciales, time = dt)
     
     simulacion.si <- as.data.frame(sol)
     attach(simulacion.si)
@@ -155,8 +154,7 @@ server <- function(input, output) {
     
     r0 <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(sum(v_iniciales))*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
     
-    output$table1 <- renderTable(data.frame(a = 1L, date = "7 Jan 17", b = 80L, c = 80L, d = -4L,
-                                            e = 26L, f = 58L, g = 16L, h = 12L, i = 12L, R0= r0))
+    output$table1 <- renderTable(data.frame("Variable" = c("R0","B","C"), "Valor" = c(r0,2,3)))
     
   })
 }
