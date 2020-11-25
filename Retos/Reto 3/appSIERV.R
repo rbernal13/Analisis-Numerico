@@ -154,7 +154,8 @@ server <- function(input, output) {
     
     r0 <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(sum(v_iniciales))*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
     
-    output$table1 <- renderTable(data.frame("Variable" = c("R0","B","C"), "Valor" = c(r0,2,3)))
+    output$table1 <- renderTable(data.frame("Variable" = c("R0","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)"),
+                                            "Valor" = c(r0,(1/input$gamma),(1/input$sigma))))
     
   })
 }
