@@ -157,7 +157,7 @@ server <- function(input, output) {
     output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)","Valor phi"),
                                             "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L), ((input$beta*input$r*input$r*3.1416)/(input$L*input$L)) )
     ))
-    output$table2 <- renderTable(data.frame(sol))
+      output$table2 <- renderTable(data.frame(sol))
   })
 }
 
