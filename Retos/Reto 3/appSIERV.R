@@ -24,7 +24,7 @@ ui <- fluidPage(
                   selected = "adams"),
       sliderInput("L",
                   "Valor del area:",
-                  min = 5,
+                  min = 1,
                   max = 50,
                   value = 10),
       sliderInput("r",
@@ -32,6 +32,11 @@ ui <- fluidPage(
                   min = 0.1,
                   max = 4,
                   value = 2),
+      sliderInput("Tiempo",
+                  "Minutos",
+                  min = 100,
+                  max = 2000,
+                  value = 1000),
       sliderInput("beta",
                   "Valor beta (tasa de infeccion):",
                   min = 0.0001,
@@ -76,12 +81,8 @@ ui <- fluidPage(
                   "Valor de Expuestos : ",
                   min = 1,
                   max = 9,
-                  value = 5),
-      sliderInput("Tiempo",
-                  "Dias",
-                  min = 100,
-                  max = 2000,
-                  value = 1000)
+                  value = 5)
+
     ),
     
     # Show a plot of the generated distribution
@@ -137,7 +138,7 @@ server <- function(input, output) {
     attach(simulacion.si)
     
     N <- sum(v_iniciales)
-    plot(dt, S, type="l", col="blue", ylim=c(0,sum(v_iniciales)), xlab = "Tiempo (Dias)", ylab="Numero de individuos (en miles)")
+    plot(dt, S, type="l", col="blue", ylim=c(0,sum(v_iniciales)), xlab = "Tiempo (Minutos)", ylab="Numero de individuos (en miles)")
     lines(dt, I, type="l", col="red")
     lines(dt, R, type="l", col="green")
     lines(dt, V, type = "l", col = "brown")
@@ -154,7 +155,7 @@ server <- function(input, output) {
     #p0 <- 0
     r0p <- (((input$beta)*(3.1416)*((input$r)*(input$r))*(p0)*(0.001 + 0.001)*(input$alpha))/((input$L * input$L)*(0.001 + input$alpha)*(0.001 + input$gamma)*(0.001 + 0.001 + input$sigma)))
     
-    output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Dias)","Periodo Latente 1/sigma (Dias)","Alcance de un nodo suceptible o expuesto (Nodos)","Valor phi"),
+    output$table1 <- renderTable(data.frame("Variable" = c("Poblacion N=S+E+I+R+V","Densidad de nodos p","R0 segun el radio de comunicacion r","R0 segun la densidad de nodos p","Periodo Infeccioso 1/gamma (Minutos)","Periodo Latente 1/sigma (Minutos)","Alcance de un nodo suceptible o expuesto (Nodos)","Valor phi"),
                                             "Valor" = c(sum(c(S=input$S, I=input$I, R=input$R, V=input$V, E=input$E)),p0,r0r,r0p,(1/input$gamma),(1/input$sigma),((input$S*(3.1416)*(input$r*input$r))/input$L), ((input$beta*input$r*input$r*3.1416)/(input$L*input$L)) )
     ))
       output$table2 <- renderTable(data.frame(sol))
