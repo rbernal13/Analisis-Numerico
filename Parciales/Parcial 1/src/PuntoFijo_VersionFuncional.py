@@ -13,6 +13,7 @@ este numero en caso de no encontrar la raiz
 errorI=[]
 
 nIteraciones=[]
+
 def punto_fijo(f, x_0, TOL, fd, ite=10000000000 ):
     error = 0.004
     iteraciones=0
